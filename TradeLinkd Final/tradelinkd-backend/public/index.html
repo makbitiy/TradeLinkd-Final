@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradeLinkd — Find Trusted Contractors for Your Property</title>
+<style>
+  :root{
+    --bg:#f6f5f1; --card:#ffffff; --ink:#1c1c1a; --sub:#6b6a66;
+    --line:#e6e4de; --accent:#1d5f45; --accent-dark:#123f2e; --accent-light:#e5f0ea;
+    --warn:#b3541e; --radius:14px; --star:#c8871a;
+    --shadow:0 1px 2px rgba(20,40,30,0.05), 0 2px 10px rgba(20,40,30,0.05);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);
+    background-color:#ffffff;
+    min-height:100vh;
+  }
+  header{background:linear-gradient(135deg, var(--accent-dark), #0e2e22);color:#fff;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:0 3px 20px rgba(0,0,0,0.2);position:relative;}
+  header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:#FFC42E;}
+  header .brand{font-size:21px;font-weight:700;letter-spacing:-0.3px;cursor:pointer;}
+  header .brand span{color:#a7d8c1;}
+  .brand-mark{font-weight:700;color:var(--accent-dark);}
+  .brand-mark span{color:var(--accent);}
+  nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  nav button{background:transparent;border:1px solid rgba(255,255,255,0.32);color:#fff;padding:8px 16px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer;position:relative;transition:background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;}
+  nav button:hover{background:rgba(255,255,255,0.14);}
+  nav button:active{transform:scale(0.97);}
+  nav button.active{background:#fff;color:var(--accent-dark);border-color:#fff;}
+  nav .who{font-size:13px;color:#cfe8db;margin-right:4px;display:flex;align-items:center;gap:6px;}
+  nav .who img{width:22px;height:22px;border-radius:50%;object-fit:cover;}
+  main{max-width:900px;margin:0 auto;padding:24px 20px 60px;position:relative;}
+  footer{text-align:center;color:var(--sub);font-size:12px;padding:20px 20px 32px;}
+  .hero{text-align:center;padding:38px 16px 30px;}
+  .hero h1{font-size:29px;margin:0 0 8px;letter-spacing:-0.5px;font-weight:700;}
+  .hero p{color:var(--sub);font-size:15px;margin:0;}
+  .tabs{display:flex;gap:8px;justify-content:center;margin:20px 0 28px;}
+  .tab-btn{padding:10px 20px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14px;font-weight:600;color:var(--sub);transition:all 0.15s ease;}
+  .tab-btn:hover{border-color:var(--accent);color:var(--accent-dark);}
+  .tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow 0.15s ease, transform 0.15s ease;}
+  .card h3{margin:0 0 4px;font-size:17px;font-weight:700;}
+  .meta{color:var(--sub);font-size:13px;margin:2px 0 10px;}
+  .desc{font-size:14px;line-height:1.6;color:#3a3a37;white-space:pre-wrap;}
+  .badge{display:inline-block;background:var(--accent-light);color:var(--accent-dark);font-size:12px;padding:3px 11px;border-radius:999px;margin-right:6px;margin-top:8px;font-weight:600;}
+  .empty-badge{display:inline-block;background:var(--accent-light);color:var(--accent-dark);font-size:12px;padding:3px 12px;border-radius:999px;font-weight:800;letter-spacing:0.03em;}
+  form.card{display:flex;flex-direction:column;gap:12px;max-width:460px;margin:0 auto 16px;}
+  form.card.wide{max-width:none;}
+  form.card.centered{text-align:center;}
+  label{font-size:13px;font-weight:700;color:#4a4a46;display:block;text-align:left;}
+  input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;background:#fcfbf9;transition:border-color 0.15s ease, box-shadow 0.15s ease;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,95,69,0.12);}
+  input[readonly]{background:#f0efe9;color:var(--sub);cursor:not-allowed;}
+  textarea{min-height:80px;resize:vertical;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .checkbox-row{display:flex;align-items:center;gap:8px;font-size:13px;color:#4a4a46;font-weight:400;text-align:left;}
+  .pw-req{font-size:12px;color:var(--warn);margin-top:5px;}
+  .pw-req.met{color:var(--accent);}
+  .checkbox-row input{width:auto;}
+  .submit-btn{background:linear-gradient(135deg, var(--accent), var(--accent-dark));color:#fff;border:none;padding:12px;border-radius:999px;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;transition:transform 0.12s ease, box-shadow 0.12s ease;box-shadow:0 3px 10px rgba(29,95,69,0.3);}
+  .submit-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(29,95,69,0.38);}
+  .submit-btn:active{transform:translateY(0) scale(0.98);}
+  .submit-btn:disabled{opacity:0.6;cursor:default;transform:none;}
+  .ghost-btn{background:transparent;border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.15s ease;}
+  .ghost-btn:hover{background:var(--accent-light);border-color:var(--accent);}
+  .empty{text-align:center;color:var(--accent-dark);padding:40px 20px;font-size:14.5px;font-weight:600;letter-spacing:0.01em;}
+  .filter-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;align-items:center;}
+  .filter-bar select{flex:0 0 200px;}
+  .filter-bar input{flex:0 0 200px;}
+  .filter-bar .filter-btn{flex:0 0 auto;}
+  .err{color:var(--warn);font-size:13px;margin-top:-4px;}
+  .contact-reveal{font-size:13px;color:var(--ink);background:var(--accent-light);border-radius:10px;padding:8px 12px;margin-top:10px;display:inline-block;}
+  .contact-btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:7px 15px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;margin-right:6px;transition:all 0.15s ease;}
+  .contact-btn:hover{background:var(--accent-light);}
+  .contact-btn:active{transform:scale(0.97);}
+  .loading{text-align:center;color:var(--sub);padding:30px;font-size:14px;}
+  .gate{text-align:center;padding:40px 20px;color:var(--sub);font-size:14px;}
+  .trade-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;border:1px solid var(--line);border-radius:10px;padding:12px;background:#fcfbf9;text-align:left;}
+  .trade-check{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:400;color:var(--ink);}
+  .trade-check input{width:auto;}
+  .type-toggle{display:flex;gap:8px;margin-bottom:4px;}
+  .type-toggle button{flex:1;padding:9px;border-radius:999px;border:1px solid var(--line);background:#fcfbf9;cursor:pointer;font-size:13px;font-weight:700;transition:all 0.15s ease;}
+  .type-toggle button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .photo-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;justify-content:center;}
+  .photo-row img{width:88px;height:88px;object-fit:cover;border-radius:10px;border:1px solid var(--line);cursor:zoom-in;transition:transform 0.12s ease;}
+  .photo-row img:hover{transform:scale(1.04);}
+  .card-head{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
+  .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--accent-light);flex-shrink:0;cursor:zoom-in;}
+  .avatar-fallback{width:44px;height:44px;border-radius:50%;background:var(--accent-light);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;}
+  .logo-img{width:44px;height:44px;border-radius:10px;object-fit:cover;border:1px solid var(--line);flex-shrink:0;cursor:zoom-in;}
+  .stars{color:var(--star);font-size:14px;letter-spacing:1px;}
+  .review{border-top:1px solid var(--line);padding-top:10px;margin-top:10px;}
+  .review .rname{font-weight:700;font-size:13px;}
+  .review .rcomment{font-size:13px;color:#3a3a37;margin-top:2px;}
+  .file-hint{font-size:12px;color:var(--sub);margin-top:6px;}
+  .thread-list-item{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--line);cursor:pointer;transition:background 0.12s ease;}
+  .thread-list-item:hover{background:var(--accent-light);}
+  .thread-list-item .tname{font-weight:700;font-size:14px;}
+  .thread-list-item .tpreview{font-size:13px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px;}
+  .pin-btn{background:transparent;border:none;font-size:16px;cursor:pointer;padding:4px;color:var(--sub);flex-shrink:0;}
+  .pin-btn.pinned{color:var(--star);}
+  .msg-bubble{max-width:75%;padding:8px 14px;border-radius:16px;margin-bottom:8px;font-size:14px;line-height:1.4;}
+  .msg-mine{background:var(--accent);color:#fff;margin-left:auto;border-bottom-right-radius:4px;}
+  .msg-theirs{background:var(--accent-light);color:var(--ink);margin-right:auto;border-bottom-left-radius:4px;}
+  .msg-thread{display:flex;flex-direction:column;max-height:420px;overflow-y:auto;padding:12px;background:#fcfbf9;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;}
+  .msg-send-row{display:flex;gap:8px;}
+  .msg-send-row input{flex:1;}
+  .msg-send-row button{width:auto;padding:10px 16px;}
+  .status-pill{display:inline-block;font-size:12px;padding:3px 11px;border-radius:999px;margin-top:8px;margin-right:6px;font-weight:600;}
+  .status-waiting{background:#fdf1de;color:#8a5a12;}
+  .status-done{background:var(--accent-light);color:var(--accent-dark);}
+
+  .file-input-hidden{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;}
+  .file-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg, var(--accent), var(--accent-dark));color:#fff;border:none;padding:10px 20px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;transition:transform 0.1s ease, box-shadow 0.12s ease;box-shadow:0 2px 8px rgba(29,95,69,0.22);}
+  .file-btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(29,95,69,0.28);}
+  .file-btn:active{transform:translateY(0) scale(0.97);}
+  .file-btn.secondary{background:var(--accent-light);color:var(--accent-dark);box-shadow:none;}
+  .file-btn.secondary:hover{background:#d3e6db;transform:none;}
+
+  .avatar-crop-wrap{width:160px;height:160px;border-radius:50%;overflow:hidden;background:var(--accent-light);border:2px solid var(--line);position:relative;cursor:grab;flex-shrink:0;user-select:none;touch-action:none;margin:0 auto;}
+  .logo-crop-wrap{border-radius:20px;}
+  .avatar-crop-wrap:active{cursor:grabbing;}
+  .avatar-crop-wrap img{position:absolute;left:0;top:0;max-width:none;pointer-events:none;}
+  .avatar-crop-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--accent-dark);font-size:12px;text-align:center;padding:10px;}
+  .avatar-preview-circle{width:96px;height:96px;border-radius:50%;overflow:hidden;background:var(--accent-light);border:2px solid var(--line);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;}
+  .avatar-preview-circle img{width:100%;height:100%;object-fit:cover;}
+  .avatar-preview-circle .placeholder-text{font-size:11px;font-weight:800;color:var(--accent-dark);text-align:center;padding:6px;text-transform:uppercase;letter-spacing:0.06em;line-height:1.4;}
+
+  .logo-preview-row{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:8px;}
+  .logo-preview{width:88px;height:88px;border-radius:16px;object-fit:cover;border:1px solid var(--line);background:var(--accent-light);}
+
+  .toast-wrap{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;max-width:320px;}
+  .toast{background:linear-gradient(135deg, var(--accent), var(--accent-dark));color:#fff;padding:14px 36px 14px 18px;border-radius:16px;font-size:14px;line-height:1.4;box-shadow:0 8px 22px rgba(0,0,0,0.2);position:relative;animation:toast-in 0.18s ease;}
+  .toast.toast-error{background:linear-gradient(135deg, #c8672a, var(--warn));}
+  .toast .toast-close{position:absolute;top:6px;right:10px;background:transparent;border:none;color:#fff;font-size:18px;cursor:pointer;line-height:1;padding:2px;}
+  @keyframes toast-in{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+
+  .confirm-overlay{position:fixed;inset:0;background:rgba(18,63,46,0.45);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;}
+  .confirm-box{background:#fff;border-radius:18px;padding:24px;max-width:360px;width:100%;text-align:center;box-shadow:0 16px 44px rgba(0,0,0,0.3);}
+  .confirm-box p{margin:0 0 18px;font-size:14px;color:var(--ink);}
+  .confirm-actions{display:flex;gap:10px;justify-content:center;margin-top:14px;}
+  .confirm-actions button{padding:9px 20px;border-radius:999px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:transform 0.1s ease;}
+  .confirm-actions button:active{transform:scale(0.97);}
+  .confirm-yes{background:var(--accent);color:#fff;}
+  .confirm-yes:hover{background:var(--accent-dark);}
+  .confirm-no{background:var(--accent-light);color:var(--accent-dark);}
+  .confirm-no:hover{background:#d3e6db;}
+
+  .lightbox-overlay{position:fixed;inset:0;background:rgba(10,28,20,0.85);display:flex;align-items:center;justify-content:center;z-index:10000;padding:24px;cursor:zoom-out;}
+  .lightbox-img-full{max-width:90vw;max-height:90vh;border-radius:14px;box-shadow:0 16px 48px rgba(0,0,0,0.4);}
+
+  .business-hero{text-align:center;padding:10px 0 20px;}
+  .business-logo-lg{width:140px;height:140px;border-radius:24px;object-fit:cover;border:1px solid var(--line);background:var(--accent-light);cursor:zoom-in;box-shadow:var(--shadow);}
+  .business-logo-lg-fallback{width:140px;height:140px;border-radius:24px;background:var(--accent-light);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:40px;}
+
+  .welcome-wrap{max-width:720px;margin:0 auto;position:relative;}
+  .welcome-hero{text-align:center;padding:20px 16px 32px;position:relative;}
+  .welcome-directory-fade-wrap{position:relative;max-height:1100px;overflow:hidden;margin-bottom:4px;}
+  .welcome-directory-fade{position:absolute;left:0;right:0;bottom:0;height:200px;background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffffff 85%);pointer-events:none;}
+  .welcome-hero h1{font-size:32px;margin:0 0 12px;letter-spacing:-0.6px;font-weight:700;}
+  .welcome-hero p{color:var(--sub);font-size:16px;line-height:1.6;max-width:520px;margin:0 auto;}
+  .welcome-cta{display:flex;flex-direction:column;align-items:center;gap:14px;margin:24px 0 0;}
+  .welcome-cta .submit-btn{width:auto;padding:14px 36px;font-size:15.5px;}
+  .welcome-cta-sub{text-align:center;color:var(--sub);font-size:15px;max-width:520px;margin:36px auto 18px;line-height:1.6;}
+  .welcome-cta-sub strong{color:var(--accent-dark);}
+  .welcome-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;}
+  .welcome-col h3{margin:0 0 8px;font-size:16px;font-weight:700;}
+  .welcome-col ul{margin:0;padding-left:18px;font-size:14px;color:#3a3a37;line-height:1.8;}
+  @media (max-width:600px){ .welcome-cols{grid-template-columns:1fr;} }
+
+  .thread-item{padding:16px 0;border-bottom:1px solid var(--line);}
+  .thread-item:last-child{border-bottom:none;}
+  .thread-item h4{margin:0 0 4px;font-size:15px;font-weight:700;cursor:pointer;}
+  .thread-item h4:hover{color:var(--accent);}
+  .reply-bubble{background:#fcfbf9;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-top:10px;font-size:13px;}
+
+  .dyn-list{display:flex;flex-direction:column;gap:8px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand" id="brand-logo">Trade<span>Linkd</span></div>
+  <nav id="nav"></nav>
+</header>
+
+<main>
+  <div id="content" class="loading">Loading...</div>
+</main>
+
+<footer>© 2026 TradeLinkd. All rights reserved.</footer>
+
+<datalist id="city-list"></datalist>
+
+<script>
+const API = '';
+const TRADES = ["Plumbing","Electrical","Roofing","HVAC","Painting","Landscaping","General Contracting","Flooring","Carpentry","Drywall","Masonry","Cleaning","Dumpster Rental","Moving","Property Restoration","Handyman","Demolition","Junk Removal","Pest Control","Locksmith","Pools"];
+const CITIES = ["New York, NY","Los Angeles, CA","Chicago, IL","Houston, TX","Phoenix, AZ","Philadelphia, PA","San Antonio, TX","San Diego, CA","Dallas, TX","San Jose, CA","Austin, TX","Jacksonville, FL","Fort Worth, TX","Columbus, OH","Charlotte, NC","San Francisco, CA","Indianapolis, IN","Seattle, WA","Denver, CO","Washington, DC","Boston, MA","Detroit, MI","Nashville, TN","Portland, OR","Las Vegas, NV","Memphis, TN","Louisville, KY","Baltimore, MD","Milwaukee, WI","Atlanta, GA","Miami, FL","Minneapolis, MN","Tampa, FL","New Orleans, LA","Cleveland, OH","Pittsburgh, PA","Cincinnati, OH","Orlando, FL","Raleigh, NC","St. Louis, MO","Salt Lake City, UT","Grand Rapids, MI","Ann Arbor, MI","Warren, MI","Sterling Heights, MI","Livonia, MI","Dearborn, MI","Troy, MI","Farmington Hills, MI","Novi, MI","Southfield, MI","Rochester Hills, MI","Flint, MI","Lansing, MI","Kalamazoo, MI"];
+const RADIUS_OPTIONS = [10, 25, 50, 100];
+
+let state = {
+  view: 'welcome', token: localStorageGet('hc_token'), user: null,
+  authMode: 'login', signupType: 'homeowner',
+  activeThreadUserId: null, editingJobId: null, businessId: null, currentBusiness: null,
+  networkTab: 'members', activeNetworkPostId: null,
+  pendingAvatarBlob: null,
+  pendingLogoBlob: null
+};
+
+function localStorageGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function localStorageSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function localStorageRemove(k){ try{ localStorage.removeItem(k); }catch(e){} }
+
+async function api(path, opts={}){
+  const headers = Object.assign({}, opts.headers || {});
+  if(!(opts.body instanceof FormData)) headers['Content-Type'] = 'application/json';
+  if(state.token) headers['Authorization'] = 'Bearer ' + state.token;
+  const res = await fetch(API + path, Object.assign({}, opts, { headers }));
+  let data = {};
+  try{ data = await res.json(); }catch(e){}
+  if(!res.ok){
+    const err = new Error(data.error || 'Something went wrong. Please try again.');
+    err.status = res.status;
+    err.data = data;
+    throw err;
+  }
+  return data;
+}
+
+function escapeHtml(s){ const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+// Builds a display string from an entity's state + (optional, privacy-gated) county.
+// The county field is only ever populated by the server when it's meant to be shown.
+function locationLine(entity){
+  if(!entity) return '';
+  if(entity.county) return `${entity.county}, ${entity.state || ''}`;
+  return entity.state || '';
+}
+function tradeOptions(){ return TRADES.map(t => `<option value="${t}">${t}</option>`).join(''); }
+function stateOptions(selected){
+  return `<option value="" disabled ${!selected?'selected':''}>Select your state</option>` +
+    STATES.map(s=>`<option value="${s.code}" ${s.code===selected?'selected':''}>${s.name}</option>`).join('');
+}
+function stateCountyFields(prefix, stateVal, countyVal, countyPublicVal){
+  return `<div style="text-align:left;">
+    <label>State</label>
+    <select id="${prefix}-state" required>${stateOptions(stateVal)}</select>
+  </div>
+  <div style="text-align:left;">
+    <label>County (Optional)</label>
+    <input type="text" id="${prefix}-county" placeholder="e.g. Macomb County" autocomplete="off" value="${escapeHtml(countyVal||'')}">
+    <label class="checkbox-row" style="margin-top:8px;"><input type="checkbox" id="${prefix}-county-public" ${countyPublicVal?'checked':''}> Publicly display my county</label>
+  </div>`;
+}
+function tradeCheckboxes(prefix, includeOther){
+  let html = `<div class="trade-grid">${TRADES.map(t=>`
+    <label class="trade-check"><input type="checkbox" class="${prefix}-trade" value="${t}"> ${t}</label>
+  `).join('')}`;
+  if(includeOther){
+    html += `<label class="trade-check"><input type="checkbox" id="${prefix}-trade-other"> Other</label>`;
+  }
+  html += `</div>`;
+  return html;
+}
+function radiusOptions(){ return RADIUS_OPTIONS.map(r=>`<option value="${r}">${r} Miles</option>`).join(''); }
+function starDisplay(avg){
+  if(avg == null) return '<span class="empty-badge">No Reviews Yet</span>';
+  const full = Math.round(avg);
+  return `<span class="stars">${'★'.repeat(full)}${'☆'.repeat(5-full)}</span> <span class="meta">${avg} avg</span>`;
+}
+function avatarHtml(pic, name, size){
+  size = size || 44;
+  if(pic) return `<img class="avatar zoomable" src="${escapeHtml(pic)}" style="width:${size}px;height:${size}px;">`;
+  const initial = (name||'?').trim().charAt(0).toUpperCase();
+  return `<div class="avatar-fallback" style="width:${size}px;height:${size}px;">${escapeHtml(initial)}</div>`;
+}
+function contactButtonHtml(contact){
+  if(!contact) return `<button class="contact-btn" data-gate="1">View Contact Information</button>`;
+  return `<button class="contact-btn" data-reveal-email="${escapeHtml(contact.email)}" data-reveal-phone="${contact.phone ? escapeHtml(contact.phone) : ''}">Show Contact Info</button>`;
+}
+function formatPhoneInput(raw){
+  const digits = raw.replace(/\D/g, '').slice(0, 10);
+  if(digits.length <= 3) return digits;
+  if(digits.length <= 6) return `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+}
+function formatBudgetInput(raw){
+  // digits, spaces, hyphen (for ranges), $ and , and . only
+  return raw.replace(/[^0-9\s\-\$,.]/g, '');
+}
+
+document.getElementById('city-list').innerHTML = CITIES.map(c=>`<option value="${escapeHtml(c)}">`).join('');
+const STATES = [
+  {code:'AL',name:'Alabama'},{code:'AK',name:'Alaska'},{code:'AZ',name:'Arizona'},{code:'AR',name:'Arkansas'},
+  {code:'CA',name:'California'},{code:'CO',name:'Colorado'},{code:'CT',name:'Connecticut'},{code:'DE',name:'Delaware'},
+  {code:'DC',name:'District of Columbia'},{code:'FL',name:'Florida'},{code:'GA',name:'Georgia'},{code:'HI',name:'Hawaii'},
+  {code:'ID',name:'Idaho'},{code:'IL',name:'Illinois'},{code:'IN',name:'Indiana'},{code:'IA',name:'Iowa'},
+  {code:'KS',name:'Kansas'},{code:'KY',name:'Kentucky'},{code:'LA',name:'Louisiana'},{code:'ME',name:'Maine'},
+  {code:'MD',name:'Maryland'},{code:'MA',name:'Massachusetts'},{code:'MI',name:'Michigan'},{code:'MN',name:'Minnesota'},
+  {code:'MS',name:'Mississippi'},{code:'MO',name:'Missouri'},{code:'MT',name:'Montana'},{code:'NE',name:'Nebraska'},
+  {code:'NV',name:'Nevada'},{code:'NH',name:'New Hampshire'},{code:'NJ',name:'New Jersey'},{code:'NM',name:'New Mexico'},
+  {code:'NY',name:'New York'},{code:'NC',name:'North Carolina'},{code:'ND',name:'North Dakota'},{code:'OH',name:'Ohio'},
+  {code:'OK',name:'Oklahoma'},{code:'OR',name:'Oregon'},{code:'PA',name:'Pennsylvania'},{code:'RI',name:'Rhode Island'},
+  {code:'SC',name:'South Carolina'},{code:'SD',name:'South Dakota'},{code:'TN',name:'Tennessee'},{code:'TX',name:'Texas'},
+  {code:'UT',name:'Utah'},{code:'VT',name:'Vermont'},{code:'VA',name:'Virginia'},{code:'WA',name:'Washington'},
+  {code:'WV',name:'West Virginia'},{code:'WI',name:'Wisconsin'},{code:'WY',name:'Wyoming'}
+];
+
+// ---------- Toasts ----------
+function showToast(message, type){
+  let wrap = document.getElementById('toast-wrap');
+  if(!wrap){ wrap = document.createElement('div'); wrap.id = 'toast-wrap'; wrap.className = 'toast-wrap'; document.body.appendChild(wrap); }
+  const t = document.createElement('div');
+  t.className = 'toast' + (type === 'error' ? ' toast-error' : '');
+  t.innerHTML = `${escapeHtml(message)}<button class="toast-close" aria-label="Close">&times;</button>`;
+  t.querySelector('.toast-close').onclick = ()=> t.remove();
+  wrap.appendChild(t);
+}
+
+// ---------- Custom confirm dialog ----------
+function showConfirm(message){
+  return new Promise((resolve)=>{
+    const overlay = document.createElement('div');
+    overlay.className = 'confirm-overlay';
+    overlay.innerHTML = `<div class="confirm-box"><p>${escapeHtml(message)}</p>
+      <div class="confirm-actions"><button class="confirm-no">Cancel</button><button class="confirm-yes">Yes, Continue</button></div></div>`;
+    document.body.appendChild(overlay);
+    overlay.querySelector('.confirm-no').onclick = ()=>{ overlay.remove(); resolve(false); };
+    overlay.querySelector('.confirm-yes').onclick = ()=>{ overlay.remove(); resolve(true); };
+  });
+}
+
+// ---------- Lightbox ----------
+document.addEventListener('click', (e)=>{
+  const img = e.target.closest('.zoomable');
+  if(img && img.tagName === 'IMG'){
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.innerHTML = `<img src="${img.src}" class="lightbox-img-full">`;
+    overlay.onclick = ()=> overlay.remove();
+    document.body.appendChild(overlay);
+  }
+});
+
+// ---------- Avatar cropper (used inside the profile picture popup) ----------
+let activeDrag = null;
+document.addEventListener('mousemove', (e)=>{ if(activeDrag) dragMove(e.clientX, e.clientY); });
+document.addEventListener('mouseup', ()=>{ activeDrag = null; });
+document.addEventListener('touchmove', (e)=>{ if(activeDrag){ const t = e.touches[0]; dragMove(t.clientX, t.clientY); e.preventDefault(); } }, { passive:false });
+document.addEventListener('touchend', ()=>{ activeDrag = null; });
+
+function dragMove(x, y){
+  const { state: st, img, size } = activeDrag;
+  let nx = activeDrag.startOffX + (x - activeDrag.startX);
+  let ny = activeDrag.startOffY + (y - activeDrag.startY);
+  const minX = size - st.dispW, maxX = 0, minY = size - st.dispH, maxY = 0;
+  nx = Math.min(maxX, Math.max(minX, nx));
+  ny = Math.min(maxY, Math.max(minY, ny));
+  st.offsetX = nx; st.offsetY = ny;
+  img.style.left = nx + 'px'; img.style.top = ny + 'px';
+}
+
+window.__cropStates = {};
+
+function placeCropperImage(prefix, wrap, img, size){
+  const SIZE = size || 160;
+  const scale = Math.max(SIZE / img.naturalWidth, SIZE / img.naturalHeight);
+  const dispW = img.naturalWidth * scale, dispH = img.naturalHeight * scale;
+  const cs = { img, dispW, dispH, offsetX: (SIZE - dispW) / 2, offsetY: (SIZE - dispH) / 2, size: SIZE };
+  window.__cropStates[prefix] = cs;
+  wrap.innerHTML = '';
+  img.style.width = dispW + 'px';
+  img.style.height = dispH + 'px';
+  img.style.left = cs.offsetX + 'px';
+  img.style.top = cs.offsetY + 'px';
+  wrap.appendChild(img);
+  wrap.onmousedown = (e)=>{ activeDrag = { state: cs, img, size: SIZE, startX: e.clientX, startY: e.clientY, startOffX: cs.offsetX, startOffY: cs.offsetY }; e.preventDefault(); };
+  wrap.ontouchstart = (e)=>{ const t = e.touches[0]; activeDrag = { state: cs, img, size: SIZE, startX: t.clientX, startY: t.clientY, startOffX: cs.offsetX, startOffY: cs.offsetY }; };
+}
+
+function cropToBlob(prefix, outputSize){
+  outputSize = outputSize || 320;
+  const cs = window.__cropStates[prefix];
+  if(!cs) return Promise.resolve(null);
+  const canvas = document.createElement('canvas');
+  canvas.width = outputSize; canvas.height = outputSize;
+  const ctx = canvas.getContext('2d');
+  const factor = outputSize / cs.size;
+  ctx.drawImage(cs.img, cs.offsetX * factor, cs.offsetY * factor, cs.dispW * factor, cs.dispH * factor);
+  return new Promise(resolve => canvas.toBlob(b => resolve(b), 'image/jpeg', 0.92));
+}
+
+// Opens a popup where the user picks a photo and drags it to position within
+// a circle. Calling onConfirm(blob) when they click "Use This Photo".
+function openImageCropModal(title, shapeClass, onConfirm){
+  const overlay = document.createElement('div');
+  overlay.className = 'confirm-overlay';
+  overlay.innerHTML = `<div class="confirm-box" style="max-width:360px;">
+    <h3 style="margin-top:0;">${escapeHtml(title)}</h3>
+    <div class="avatar-crop-wrap ${shapeClass}" id="modal-pic-wrap"><div class="avatar-crop-placeholder">Choose a photo below, then drag it to position</div></div>
+    <div style="margin-top:14px;">
+      <input type="file" id="modal-pic-input" accept="image/*" class="file-input-hidden">
+      <label for="modal-pic-input" class="file-btn" id="modal-pic-label">Choose Photo</label>
+    </div>
+    <div class="confirm-actions">
+      <button class="confirm-no" id="modal-pic-cancel">Cancel</button>
+      <button class="confirm-yes" id="modal-pic-save">Use This Photo</button>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  const input = overlay.querySelector('#modal-pic-input');
+  const wrap = overlay.querySelector('#modal-pic-wrap');
+  const label = overlay.querySelector('#modal-pic-label');
+  input.onchange = ()=>{
+    const file = input.files[0];
+    if(!file) return;
+    const img = new Image();
+    img.onload = ()=> placeCropperImage('modal', wrap, img, 160);
+    img.src = URL.createObjectURL(file);
+    label.textContent = 'Change Photo';
+  };
+  overlay.querySelector('#modal-pic-cancel').onclick = ()=>{ delete window.__cropStates['modal']; overlay.remove(); };
+  overlay.querySelector('#modal-pic-save').onclick = async ()=>{
+    if(!window.__cropStates['modal']){ showToast('Please choose a photo first.', 'error'); return; }
+    const blob = await cropToBlob('modal');
+    delete window.__cropStates['modal'];
+    overlay.remove();
+    onConfirm(blob);
+  };
+}
+function openProfilePicModal(onConfirm){
+  openImageCropModal('Adjust Your Profile Picture', '', onConfirm);
+}
+function openLogoCropModal(onConfirm){
+  openImageCropModal('Adjust Your Logo', 'logo-crop-wrap', onConfirm);
+}
+
+// ---------- Dynamic "keep adding a box as you fill one in" text lists ----------
+function setupDynamicTextList(container, inputClass, placeholder){
+  function addBox(){
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = inputClass;
+    input.placeholder = placeholder;
+    input.addEventListener('input', ()=>{
+      const boxes = container.querySelectorAll('input');
+      if(input === boxes[boxes.length - 1] && input.value.trim()){
+        addBox();
+      }
+    });
+    container.appendChild(input);
+  }
+  container.innerHTML = '';
+  addBox();
+}
+function collectDynamicValues(container){
+  return Array.from(container.querySelectorAll('input')).map(i => i.value.trim()).filter(Boolean);
+}
+
+// ---------- Session ----------
+async function restoreSession(){
+  if(!state.token) return;
+  try{ const { user } = await api('/api/auth/me'); state.user = user; }
+  catch(e){ state.token = null; state.user = null; localStorageRemove('hc_token'); }
+}
+
+// ---------- Nav ----------
+function renderNav(){
+  const nav = document.getElementById('nav');
+
+  if(!state.user){
+    nav.innerHTML = `<button id="nav-account" class="${state.view==='account'?'active':''}">Log In / Sign Up</button>`;
+    document.getElementById('nav-account').onclick = ()=>setView('account');
+    document.getElementById('brand-logo').onclick = ()=> setView('welcome');
+    return;
+  }
+
+  const isHomeowner = state.user.type === 'homeowner';
+  const isContractor = state.user.type === 'contractor';
+
+  let html = '';
+  if(isContractor){
+    html += `<button id="nav-jobs" class="${state.view==='jobs'?'active':''}">Browse Jobs</button>`;
+    html += `<button id="nav-network" class="${state.view==='network'?'active':''}">Contractor Network</button>`;
+  } else {
+    html += `<button id="nav-contractors" class="${state.view==='contractors'?'active':''}">Find Contractors</button>`;
+    html += `<button id="nav-post" class="${state.view==='post'?'active':''}">Post a Job</button>`;
+  }
+  html += `<button id="nav-messages" class="${state.view==='messages'||state.view==='thread'?'active':''}">Messages</button>`;
+  if(isContractor){
+    html += `<button id="nav-business" class="${state.view==='business' && state.businessId===state.user.id ?'active':''}">My Business Page</button>`;
+  } else {
+    html += `<button id="nav-profile" class="${state.view==='profile'?'active':''}">My Profile</button>`;
+  }
+  html += `<span class="who">${avatarHtml(state.user.profilePic, state.user.name, 22)} ${escapeHtml(state.user.name)}</span>
+  <button id="nav-logout">Log Out</button>`;
+
+  nav.innerHTML = html;
+
+  document.getElementById('brand-logo').onclick = ()=> setView(isHomeowner ? 'profile' : 'jobs');
+
+  const jobsBtn = document.getElementById('nav-jobs');
+  if(jobsBtn) jobsBtn.onclick = ()=>setView('jobs');
+  const contractorsBtn = document.getElementById('nav-contractors');
+  if(contractorsBtn) contractorsBtn.onclick = ()=>setView('contractors');
+  const networkBtn = document.getElementById('nav-network');
+  if(networkBtn) networkBtn.onclick = ()=>{ state.networkTab = 'members'; state.activeNetworkPostId = null; setView('network'); };
+  const postBtn = document.getElementById('nav-post');
+  if(postBtn) postBtn.onclick = ()=>{ state.editingJobId = null; setView('post'); };
+  document.getElementById('nav-messages').onclick = ()=>setView('messages');
+  const businessBtn = document.getElementById('nav-business');
+  if(businessBtn) businessBtn.onclick = ()=>{ state.businessId = state.user.id; setView('business'); };
+  const profileBtn = document.getElementById('nav-profile');
+  if(profileBtn) profileBtn.onclick = ()=>setView('profile');
+  document.getElementById('nav-logout').onclick = ()=>{ state.token=null; state.user=null; localStorageRemove('hc_token'); setView('welcome'); };
+}
+
+function setView(v){ state.view = v; render(); }
+
+async function render(){
+  renderNav();
+  const el = document.getElementById('content');
+  el.innerHTML = '<div class="loading">Loading...</div>';
+  try{
+    if(!state.user && !['welcome','welcome-intro','account','jobs','contractors'].includes(state.view)){
+      state.view = 'welcome';
+    }
+    if(state.user && state.user.type === 'contractor'){
+      if(state.view === 'post') state.view = 'jobs';
+      if(state.view === 'contractors') state.view = 'network';
+      if(state.view === 'profile'){ state.view = 'business'; state.businessId = state.user.id; }
+    }
+    if(state.user && state.user.type === 'homeowner'){
+      if(state.view === 'network') state.view = 'contractors';
+    }
+    if(state.view === 'welcome') el.innerHTML = await renderWelcome();
+    else if(state.view === 'welcome-intro') el.innerHTML = renderWelcomeIntro();
+    else if(state.view === 'jobs') el.innerHTML = await renderJobsList();
+    else if(state.view === 'contractors') el.innerHTML = await renderContractorsList();
+    else if(state.view === 'network') el.innerHTML = state.user ? await renderNetwork() : renderGate('use the contractor network');
+    else if(state.view === 'business') el.innerHTML = await renderBusiness();
+    else if(state.view === 'account') el.innerHTML = renderAccountForms();
+    else if(state.view === 'post') el.innerHTML = state.user ? renderPostForm() : renderGate('post a job');
+    else if(state.view === 'profile') el.innerHTML = state.user ? await renderProfile() : renderGate('view your profile');
+    else if(state.view === 'messages') el.innerHTML = state.user ? await renderThreads() : renderGate('use messaging');
+    else if(state.view === 'thread') el.innerHTML = state.user ? await renderThread() : renderGate('use messaging');
+  }catch(e){
+    el.innerHTML = `<div class="empty">We couldn't load this page: ${escapeHtml(e.message)}</div>`;
+  }
+  attachHandlers();
+}
+
+function renderGate(action){
+  return `<div class="gate">A free account is required to ${escapeHtml(action)}.<br>
+    <button class="submit-btn" id="gate-signup" style="width:auto;padding:10px 20px;">Log In / Sign Up</button>
+  </div>`;
+}
+
+// ---------- Welcome / landing page ----------
+async function renderWelcome(){
+  let directoryHtml = '';
+  try{ directoryHtml = await renderContractorsList(); }catch(e){ directoryHtml = ''; }
+
+  return `<div class="welcome-wrap">
+    <div class="welcome-directory-fade-wrap">
+      ${directoryHtml}
+      <div class="welcome-directory-fade"></div>
+    </div>
+    <div class="welcome-cta" style="margin-top:0;">
+      <button class="submit-btn" id="welcome-signup">Log In / Create an Account</button>
+    </div>
+    <div class="welcome-cta-sub">Create a free account for full access to every contractor profile, job post, and messaging tool TradeLinkd has to offer.</div>
+  </div>`;
+}
+
+function renderWelcomeIntro(){
+  return `<div class="welcome-wrap">
+    <div class="welcome-hero">
+      <h1>Property Work, Done by People You Can Trust</h1>
+      <p><span class="brand-mark">Trade<span>Linkd</span></span> connects those seeking work on residential and commercial properties with skilled contractors nearby — no cold calls, no guesswork.</p>
+    </div>
+    <div class="welcome-cta">
+      <button class="submit-btn" id="welcome-login">Log In</button>
+      <button class="submit-btn" id="welcome-signup">Create an Account</button>
+    </div>
+    <div class="welcome-cta-sub">Create a business or free personal profile. Creating an account grants full access to TradeLinkd's job board and contractor directory — the fastest way to get matched with the right people.</div>
+    <div class="welcome-cols">
+      <div class="card welcome-col">
+        <h3>If You Need Work Done</h3>
+        <ul>
+          <li>Post a job in minutes and reach contractors actively looking for work.</li>
+          <li>Browse a directory of contractors with real reviews and ratings.</li>
+          <li>Filter by trade and how close they are to you.</li>
+          <li>Message contractors directly, right on the site.</li>
+        </ul>
+      </div>
+      <div class="card welcome-col">
+        <h3>If You're a Contractor</h3>
+        <ul>
+          <li>Get in front of people actively looking to hire, in your trade and area.</li>
+          <li>Build a business page with your logo, bio, and work highlights.</li>
+          <li>Earn reviews that help you stand out.</li>
+          <li>Connect with other contractors in a members-only network.</li>
+        </ul>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ---------- Shared job card ----------
+function jobCardHtml(j){
+  const isMine = state.user && state.user.id === j.postedById;
+  const isContractorViewer = state.user && state.user.type === 'contractor';
+  return `<div class="card">
+    <div class="card-head">${avatarHtml(j.postedByPic, j.postedBy)}<div><h3 style="margin:0;">${escapeHtml(j.title)}</h3>
+    <div class="meta">${escapeHtml(j.location)} &middot; posted by ${escapeHtml(j.postedBy)}</div></div></div>
+    <div class="desc">${escapeHtml(j.description)}</div>
+    ${(j.trades||[]).map(t=>`<span class="badge">${escapeHtml(t)}</span>`).join('')}
+    ${j.budget ? `<span class="badge">Budget: ${escapeHtml(j.budget)}</span>` : ''}
+    ${j.photos.length ? `<div class="photo-row">${j.photos.map(p=>`<img class="zoomable" src="${escapeHtml(p)}">`).join('')}</div>` : ''}
+    ${j.contractorId ? `<div>
+      <span class="status-pill ${j.homeownerDone && j.contractorDone ? 'status-done':'status-waiting'}">Homeowner: ${j.homeownerDone?'Confirmed Done':'In Progress'}</span>
+      <span class="status-pill ${j.contractorDone ? 'status-done':'status-waiting'}">${escapeHtml(j.contractorName)}: ${j.contractorDone?'Confirmed Done':'In Progress'}</span>
+    </div>` : ''}
+    <div style="margin-top:8px;">
+      ${isContractorViewer ? `<button class="contact-btn" data-message-user="${j.postedById}" data-job="${j.id}">Send Message</button>` : ''}
+      ${isMine ? `<button class="contact-btn" data-edit-job="${j.id}">Edit</button>
+                  <button class="contact-btn" data-delete-job="${j.id}">Delete</button>` : ''}
+      ${isMine && j.contractorId && !j.homeownerDone ? `<button class="contact-btn" data-complete-job="${j.id}">Mark Job Complete</button>` : ''}
+      ${state.user && state.user.id === j.contractorId && !j.contractorDone ? `<button class="contact-btn" data-complete-job="${j.id}">Mark Job Complete</button>` : ''}
+    </div>
+  </div>`;
+}
+
+function nearMeFilterBar(prefix){
+  const st = window['__' + prefix + 'FromState'];
+  const rad = window['__' + prefix + 'Radius'];
+  if(st && rad){
+    const co = window['__' + prefix + 'FromCounty'];
+    const label = co ? `${co}, ${st}` : st;
+    return `<div class="filter-bar">
+      <span class="badge" style="margin-top:0;">Within ${rad} miles of ${escapeHtml(label)}</span>
+      <button class="ghost-btn filter-btn" id="${prefix}-clear-distance">Clear</button>
+    </div>`;
+  }
+  return `<div class="filter-bar">
+    ${state.user
+      ? `<button class="ghost-btn filter-btn" id="${prefix}-open-distance">Filter by Distance</button>`
+      : `<button class="ghost-btn filter-btn" data-gate="1">Filter by Distance</button>`}
+  </div>`;
+}
+
+function openDistanceModal(prefix){
+  const overlay = document.createElement('div');
+  overlay.className = 'confirm-overlay';
+  overlay.innerHTML = `<div class="confirm-box" style="max-width:360px;text-align:left;">
+    <h3 style="margin-top:0;text-align:center;">Where Are You Searching From?</h3>
+    <label>State</label>
+    <select id="dm-state">${stateOptions('')}</select>
+    <label style="margin-top:10px;display:block;">County (Optional)</label>
+    <input type="text" id="dm-county" placeholder="e.g. Macomb County" autocomplete="off">
+    <label style="margin-top:10px;display:block;">Distance</label>
+    <select id="dm-radius"><option value="" disabled selected>Select a distance</option>${radiusOptions()}</select>
+    <div id="dm-err" class="err" style="display:none;margin-top:8px;"></div>
+    <div class="confirm-actions">
+      <button class="confirm-no" id="dm-cancel">Cancel</button>
+      <button class="confirm-yes" id="dm-search">Search</button>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#dm-cancel').onclick = ()=> overlay.remove();
+  overlay.querySelector('#dm-search').onclick = ()=>{
+    const st = document.getElementById('dm-state').value;
+    const co = document.getElementById('dm-county').value.trim();
+    const rad = document.getElementById('dm-radius').value;
+    const errEl = document.getElementById('dm-err');
+    if(!st){ errEl.textContent = 'Please select a state.'; errEl.style.display='block'; return; }
+    if(!rad){ errEl.textContent = 'Please select a distance.'; errEl.style.display='block'; return; }
+    window['__' + prefix + 'FromState'] = st;
+    window['__' + prefix + 'FromCounty'] = co;
+    window['__' + prefix + 'Radius'] = rad;
+    overlay.remove();
+    render();
+  };
+}
+
+// ---------- Jobs ----------
+async function renderJobsList(){
+  const isContractorView = state.user && state.user.type === 'contractor';
+  let html = `<div class="hero"><h1>${isContractorView ? 'Find Work' : 'Browse Jobs'}</h1><p>${isContractorView ? 'Jobs posted by homeowners looking for help.' : 'See what people need done.'}</p></div>`;
+
+  const filter = window.__jobFilter || '';
+  const fromState = window['__job-nearFromState'] || '';
+  const fromCounty = window['__job-nearFromCounty'] || '';
+  const radius = window['__job-nearRadius'] || '';
+  const params = new URLSearchParams();
+  if(filter) params.set('trade', filter);
+  if(isContractorView && fromState && radius){ params.set('fromState', fromState); if(fromCounty) params.set('fromCounty', fromCounty); params.set('radiusMiles', radius); }
+  const qs = params.toString() ? '?' + params.toString() : '';
+
+  let jobsData;
+  try{
+    jobsData = await api('/api/jobs' + qs);
+  }catch(e){
+    throw e;
+  }
+
+  html += `<div class="filter-bar"><select id="job-filter" ${!state.user?'data-gate-select="1"':''}><option value="">All Trades</option>${tradeOptions()}</select></div>`;
+  if(isContractorView) html += nearMeFilterBar('job-near');
+
+  const { jobs } = jobsData;
+  if(jobs.length===0){
+    html += `<div class="empty">No jobs match your search right now.</div>`;
+  } else {
+    jobs.forEach(j=>{ html += jobCardHtml(j); });
+  }
+  return html;
+}
+
+// ---------- Customer-facing contractor directory ----------
+async function renderContractorsList(){
+  let html = `<div class="hero"><h1>Find Contractors</h1><p>Browse trusted, reviewed contractors near you.</p></div>`;
+  html += `<div class="filter-bar">
+    <input type="text" id="contractor-search" placeholder="Search contractor names..." value="${escapeHtml(window.__contractorSearch || '')}" ${!state.user?'data-gate-input="1"':''}>
+    <select id="contractor-filter" ${!state.user?'data-gate-select="1"':''}><option value="">All Trades</option>${tradeOptions()}</select>
+  </div>`;
+  html += nearMeFilterBar('contractor-near');
+
+  const filter = window.__contractorFilter || '';
+  const search = (window.__contractorSearch || '').trim().toLowerCase();
+  const fromState = window['__contractor-nearFromState'] || '';
+  const fromCounty = window['__contractor-nearFromCounty'] || '';
+  const radius = window['__contractor-nearRadius'] || '';
+  const params = new URLSearchParams();
+  if(filter) params.set('trade', filter);
+  if(fromState && radius){ params.set('fromState', fromState); if(fromCounty) params.set('fromCounty', fromCounty); params.set('radiusMiles', radius); }
+  const qs = params.toString() ? '?' + params.toString() : '';
+  let { contractors } = await api('/api/contractors' + qs);
+  if(search) contractors = contractors.filter(c => c.name.toLowerCase().includes(search));
+  if(contractors.length===0){
+    html += `<div class="empty">No contractors match your search right now.</div>`;
+  } else {
+    contractors.forEach(c=>{
+      html += `<div class="card">
+        <div class="card-head">${c.logo ? `<img class="logo-img zoomable" src="${escapeHtml(c.logo)}">` : avatarHtml(null, c.name)}
+          <div><h3 style="margin:0;">${escapeHtml(c.name)}</h3>
+          <div class="meta">${escapeHtml(locationLine(c))}${c.area ? ' &middot; serves ' + escapeHtml(c.area) : ''}</div></div></div>
+        <div class="desc">${escapeHtml(c.bio)}</div>
+        ${(c.trades||[]).map(t=>`<span class="badge">${escapeHtml(t)}</span>`).join('')}
+        ${c.years ? `<span class="badge">${escapeHtml(c.years)} Years Experience</span>` : ''}
+        <div style="margin-top:8px;">${starDisplay(c.reviews.average)} ${c.reviews.count ? `<span class="meta">(${c.reviews.count})</span>` : ''}</div>
+        <div style="margin-top:8px;">
+          ${state.user ? `<button class="contact-btn" data-view-business="${c.id}">View Business Page</button>` : `<button class="contact-btn" data-gate="1">View Business Page</button>`}
+          ${contactButtonHtml(c.contact)}
+          ${state.user ? `<button class="contact-btn" data-message-user="${c.id}">Message</button>` : `<button class="contact-btn" data-gate="1">Message</button>`}
+        </div>
+      </div>`;
+    });
+  }
+  return html;
+}
+
+// ---------- Contractor network ----------
+async function renderNetwork(){
+  let html = `<div class="tabs">
+    <button class="tab-btn ${state.networkTab==='members'?'active':''}" id="net-tab-members">Members</button>
+    <button class="tab-btn ${state.networkTab==='threads'?'active':''}" id="net-tab-threads">Threads</button>
+  </div>`;
+  if(state.networkTab === 'members') html += await renderNetworkMembers();
+  else html += (state.activeNetworkPostId ? await renderNetworkThread() : await renderNetworkThreads());
+  return html;
+}
+
+async function renderNetworkMembers(){
+  let html = `<div class="filter-bar"><select id="network-filter"><option value="">All Trades</option>${tradeOptions()}</select></div>`;
+  html += nearMeFilterBar('network-near');
+  html += `<div class="meta" style="margin-bottom:14px;">A space for contractor accounts to find and connect with each other — not visible to homeowners.</div>`;
+
+  const filter = window.__networkFilter || '';
+  const fromState = window['__network-nearFromState'] || '';
+  const fromCounty = window['__network-nearFromCounty'] || '';
+  const radius = window['__network-nearRadius'] || '';
+  const params = new URLSearchParams();
+  if(filter) params.set('trade', filter);
+  if(fromState && radius){ params.set('fromState', fromState); if(fromCounty) params.set('fromCounty', fromCounty); params.set('radiusMiles', radius); }
+  const qs = params.toString() ? '?' + params.toString() : '';
+  const { contractors } = await api('/api/contractors/network' + qs);
+  if(contractors.length===0){
+    html += `<div class="empty">No other contractors match your search right now.</div>`;
+  } else {
+    contractors.forEach(c=>{
+      html += `<div class="card">
+        <div class="card-head">${c.logo ? `<img class="logo-img zoomable" src="${escapeHtml(c.logo)}">` : avatarHtml(null, c.name)}
+          <div><h3 style="margin:0;">${escapeHtml(c.name)}</h3>
+          <div class="meta">${escapeHtml(locationLine(c))}${c.area ? ' &middot; serves ' + escapeHtml(c.area) : ''}</div></div></div>
+        <div class="desc">${escapeHtml(c.bio)}</div>
+        ${(c.trades||[]).map(t=>`<span class="badge">${escapeHtml(t)}</span>`).join('')}
+        ${c.years ? `<span class="badge">${escapeHtml(c.years)} Years Experience</span>` : ''}
+        <div style="margin-top:8px;">${starDisplay(c.reviews.average)} ${c.reviews.count ? `<span class="meta">(${c.reviews.count})</span>` : ''}</div>
+        <div style="margin-top:8px;">
+          <button class="contact-btn" data-view-business="${c.id}">View Business Page</button>
+          ${contactButtonHtml(c.contact)}
+          <button class="contact-btn" data-message-user="${c.id}">Message</button>
+        </div>
+      </div>`;
+    });
+  }
+  return html;
+}
+
+async function renderNetworkThreads(){
+  let html = `<div class="card">
+    <label>Start a New Thread</label>
+    <input type="text" id="np-title" placeholder="Title (e.g. 'Need a sub for a bathroom remodel')">
+    <textarea id="np-body" placeholder="Details..." style="margin-top:8px;"></textarea>
+    <div style="margin-top:8px;">
+      <input type="file" id="np-photos" accept="image/*" multiple class="file-input-hidden">
+      <label for="np-photos" class="file-btn">Add Photos</label>
+    </div>
+    <div class="file-hint">Up to 3 images.</div>
+    <div id="np-err" class="err" style="display:none;"></div>
+    <button class="submit-btn" id="np-submit" style="width:auto;padding:10px 20px;margin-top:8px;">Post Thread</button>
+  </div>`;
+
+  const { posts } = await api('/api/network/posts');
+  if(posts.length === 0){
+    html += `<div class="empty">No threads yet. Start one above — subcontracting opportunities, job openings, anything you want other contractors to see.</div>`;
+  } else {
+    html += `<div class="card">${posts.map(p => `
+      <div class="thread-item">
+        <h4 data-open-thread-post="${p.id}">${escapeHtml(p.title)}</h4>
+        <div class="meta">by ${escapeHtml(p.authorName)} &middot; ${p.replyCount} repl${p.replyCount===1?'y':'ies'}</div>
+        ${p.photos.length ? `<div class="photo-row">${p.photos.map(ph=>`<img class="zoomable" src="${escapeHtml(ph)}">`).join('')}</div>` : ''}
+      </div>`).join('')}</div>`;
+  }
+  return html;
+}
+
+async function renderNetworkThread(){
+  const { post, replies } = await api('/api/network/posts/' + state.activeNetworkPostId);
+  let html = `<button class="ghost-btn" id="back-to-network-threads" style="margin-bottom:12px;">&larr; All Threads</button>
+  <div class="card">
+    <div class="card-head">${post.authorLogo ? `<img class="logo-img zoomable" src="${escapeHtml(post.authorLogo)}">` : avatarHtml(null, post.authorName)}
+      <div><h3 style="margin:0;">${escapeHtml(post.title)}</h3><div class="meta">by ${escapeHtml(post.authorName)}</div></div></div>
+    <div class="desc">${escapeHtml(post.body)}</div>
+    ${post.photos.length ? `<div class="photo-row">${post.photos.map(p=>`<img class="zoomable" src="${escapeHtml(p)}">`).join('')}</div>` : ''}
+  </div>`;
+
+  html += `<h3 style="margin:20px 0 8px;">Replies</h3>`;
+  if(replies.length === 0){
+    html += `<div class="empty">No replies yet.</div>`;
+  } else {
+    replies.forEach(r=>{
+      html += `<div class="reply-bubble"><strong>${escapeHtml(r.authorName)}</strong><div>${escapeHtml(r.body)}</div></div>`;
+    });
+  }
+
+  html += `<div class="card" style="margin-top:16px;">
+    <label>Add a Reply</label>
+    <textarea id="nr-body" placeholder="Write a reply..."></textarea>
+    <div id="nr-err" class="err" style="display:none;"></div>
+    <button class="submit-btn" id="nr-submit" style="width:auto;padding:10px 20px;margin-top:8px;">Reply</button>
+  </div>`;
+
+  return html;
+}
+
+// ---------- Business page ----------
+async function renderBusiness(){
+  const id = state.businessId;
+  if(!id) return `<div class="empty">No business selected.</div>`;
+  const { contractor: c } = await api('/api/contractors/' + id);
+  state.currentBusiness = c;
+  const isOwn = state.user && state.user.id === c.id;
+
+  let html = `<div class="business-hero">
+    ${c.logo ? `<img class="business-logo-lg zoomable" src="${escapeHtml(c.logo)}">` : `<div class="business-logo-lg-fallback">${escapeHtml((c.name||'?').charAt(0).toUpperCase())}</div>`}
+    <h2 style="margin:14px 0 2px;">${escapeHtml(c.name)}</h2>
+    <div class="meta">${escapeHtml(locationLine(c))}${c.area ? ' &middot; serves ' + escapeHtml(c.area) : ''}</div>
+    <div style="margin-top:6px;">${(c.trades||[]).map(t=>`<span class="badge">${escapeHtml(t)}</span>`).join('')}${c.years ? `<span class="badge">${escapeHtml(c.years)} Years Experience</span>` : ''}</div>
+    <div style="margin-top:8px;">${starDisplay(c.reviews.average)} ${c.reviews.count ? `<span class="meta">(${c.reviews.count})</span>` : ''}</div>
+  </div>`;
+
+  html += `<div class="card">`;
+  if(isOwn){
+    html += `${stateCountyFields('biz', c.state, c.county, c.countyPublic)}
+      <div id="biz-location-err" class="err" style="display:none;"></div>
+      <button class="submit-btn" id="biz-location-save" style="width:auto;padding:10px 20px;margin-top:8px;">Save Location</button>
+      <label style="margin-top:16px;display:block;">About Your Business</label>
+      <textarea id="biz-bio" placeholder="What you do, specialties, licensing/insurance">${escapeHtml(c.bio)}</textarea>
+      <div id="biz-bio-err" class="err" style="display:none;"></div>
+      <button class="submit-btn" id="biz-bio-save" style="width:auto;padding:10px 20px;margin-top:8px;">Save Bio</button>`;
+  } else {
+    html += `<div class="desc">${c.bio ? escapeHtml(c.bio) : '<span class="empty-badge">No Bio Yet</span>'}</div>`;
+  }
+  html += `</div>`;
+
+  if(isOwn){
+    html += `<div class="card">
+      <label>Business Logo</label>
+      <button type="button" class="file-btn" id="biz-logo-open-modal">${c.logo ? 'Change Logo' : 'Choose Logo'}</button>
+      <div class="file-hint">Drag the photo to position it, then confirm.</div>
+      <div id="biz-logo-err" class="err" style="display:none;"></div>
+    </div>
+    <div class="card">
+      <label>Work Highlights (Optional)</label>
+      <div>
+        <input type="file" id="biz-photos" accept="image/*" multiple class="file-input-hidden">
+        <label for="biz-photos" class="file-btn">Add Photos</label>
+      </div>
+      <div class="file-hint">Up to 6 images, 5MB each.</div>
+      <div id="biz-photos-err" class="err" style="display:none;"></div>
+      ${c.photos.length ? `<div class="photo-row">${c.photos.map(p=>`<img class="zoomable" src="${escapeHtml(p)}">`).join('')}</div>` : ''}
+    </div>`;
+  } else if(c.photos.length){
+    html += `<div class="card"><label>Work Highlights</label><div class="photo-row">${c.photos.map(p=>`<img class="zoomable" src="${escapeHtml(p)}">`).join('')}</div></div>`;
+  }
+
+  if(!isOwn){
+    html += `<div style="text-align:center;margin-bottom:16px;">
+      ${contactButtonHtml(c.contact)}
+      ${state.user ? `<button class="contact-btn" data-message-user="${c.id}">Message</button>` : ''}
+      ${state.user && state.user.id !== c.id ? `<button class="contact-btn" data-review-contractor="${c.id}">Leave a Review</button>` : ''}
+    </div>`;
+  }
+
+  html += `<div class="card"><h3 style="margin-top:0;">Reviews</h3><div id="reviews-${c.id}"></div></div>`;
+
+  return html;
+}
+
+async function renderReviewsInline(contractorId){
+  const box = document.getElementById('reviews-' + contractorId);
+  if(!box) return;
+  box.innerHTML = '<div class="meta">Loading reviews...</div>';
+  try{
+    const { reviews } = await api('/api/contractors/' + contractorId + '/reviews');
+    box.innerHTML = reviews.map(r => `
+      <div class="review">
+        <div class="rname">${escapeHtml(r.reviewerName)} <span class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span></div>
+        ${r.comment ? `<div class="rcomment">${escapeHtml(r.comment)}</div>` : ''}
+      </div>`).join('') || '<span class="empty-badge">No Reviews Yet</span>';
+  }catch(e){ box.innerHTML = `<div class="err">${escapeHtml(e.message)}</div>`; }
+}
+
+// ---------- Account forms ----------
+function renderAccountForms(){
+  const mode = state.authMode;
+
+  if(mode === 'forgot'){
+    return `<form class="card" id="forgot-form">
+      <h3 style="margin-top:0;">Reset Your Password</h3>
+      <div class="meta">Enter your email and we'll send you a link to reset your password.</div>
+      <div><label>Email</label><input type="email" id="ff-email" autocomplete="email"></div>
+      <div id="ff-err" class="err" style="display:none;"></div>
+      <div id="ff-ok" class="meta" style="display:none;color:var(--accent-dark);"></div>
+      <button type="submit" class="submit-btn">Send Reset Link</button>
+      <button type="button" class="ghost-btn" id="ff-back" style="width:auto;margin:6px auto 0;">Back to Log In</button>
+    </form>`;
+  }
+  if(mode === 'reset'){
+    return `<form class="card" id="reset-form">
+      <h3 style="margin-top:0;">Choose a New Password</h3>
+      <div><label>New Password (6+ Characters, 1 Number or Symbol)</label><input type="password" id="rf-password" autocomplete="new-password"></div>
+      <div id="rf-err" class="err" style="display:none;"></div>
+      <button type="submit" class="submit-btn">Reset Password</button>
+    </form>`;
+  }
+
+  let html = `<div class="tabs">
+    <button class="tab-btn ${mode==='login'?'active':''}" id="auth-tab-login">Log In</button>
+    <button class="tab-btn ${mode==='signup'?'active':''}" id="auth-tab-signup">Sign Up</button>
+  </div>`;
+  if(mode === 'login'){
+    html += `<form class="card" id="login-form">
+      <div><label>Email</label><input type="email" id="lf-email" autocomplete="email"></div>
+      <div><label>Password</label><input type="password" id="lf-password" autocomplete="current-password"></div>
+      <div id="lf-err" class="err" style="display:none;"></div>
+      <button type="submit" class="submit-btn">Log In</button>
+      <button type="button" class="ghost-btn" id="lf-forgot" style="width:auto;margin:6px auto 0;">Forgot Password?</button>
+    </form>`;
+  } else if(state.signupType === 'contractor'){
+    html += `<form class="card centered" id="signup-form">      <div class="type-toggle">
+        <button type="button" id="type-homeowner" class="${state.signupType==='homeowner'?'active':''}">I Need Work Done</button>
+        <button type="button" id="type-contractor" class="${state.signupType==='contractor'?'active':''}">I'm a Contractor</button>
+      </div>
+      <div style="text-align:left;"><label>Business or Personal Name</label><input type="text" id="sf-name" placeholder="Mike's Plumbing Co. or Mike Smith"></div>
+      ${stateCountyFields('sf')}
+      <div style="text-align:left;"><label>What Kind of Contractor Are You? (Select All That Apply)</label>${tradeCheckboxes('sf', true)}
+        <div class="dyn-list" id="sf-other-trades" style="display:none;margin-top:8px;"></div>
+      </div>
+      <div style="text-align:center;">
+        <label>Business Logo (Required)</label>
+        <div class="avatar-preview-circle logo-crop-wrap" id="sf-logo-preview"><div class="placeholder-text">No Logo Yet</div></div>
+        <button type="button" class="file-btn" id="sf-logo-open-modal" style="display:block;margin:0 auto;">Choose Logo</button>
+        <div class="file-hint">This becomes your profile picture across the site too. Drag the photo to position it.</div>
+      </div>
+      <div style="text-align:left;"><label>About Your Business (Optional)</label><textarea id="sf-bio" placeholder="What you do, specialties, licensing/insurance"></textarea></div>
+      <div style="text-align:center;">
+        <label>Photos of Your Work (Optional)</label>
+        <div>
+          <input type="file" id="sf-work-photos" accept="image/*" multiple class="file-input-hidden">
+          <label for="sf-work-photos" class="file-btn">Add Photos</label>
+        </div>
+        <div class="file-hint">Up to 6 images. Uploaded once your account is created.</div>
+      </div>
+      <div class="row2" style="text-align:left;">
+        <div><label>Email</label><input type="email" id="sf-email" placeholder="you@email.com" autocomplete="email"></div>
+        <div>
+          <label>Password</label><input type="password" id="sf-password" autocomplete="new-password">
+          <div class="pw-req" id="sf-pw-req-length">✗ At least 6 characters</div>
+          <div class="pw-req" id="sf-pw-req-symbol">✗ Contains a number or symbol</div>
+        </div>
+      </div>
+      <div style="text-align:left;">
+        <label>Phone Number</label>
+        <input type="tel" id="sf-phone" placeholder="(555) 555-5555" autocomplete="tel" inputmode="numeric">
+        <label class="checkbox-row" style="margin-top:8px;"><input type="checkbox" id="sf-phone-public"> Display my phone number on my business page for individuals needing work and other contractors to see. (Otherwise only my email will be shown)</label>
+      </div>
+      <div id="sf-err" class="err" style="display:none;"></div>
+      <button type="submit" class="submit-btn">Create Account</button>
+    </form>`;
+  } else {
+    html += `<form class="card centered" id="signup-form">
+      <div class="type-toggle">
+        <button type="button" id="type-homeowner" class="${state.signupType==='homeowner'?'active':''}">I Need Work Done</button>
+        <button type="button" id="type-contractor" class="${state.signupType==='contractor'?'active':''}">I'm a Contractor</button>
+      </div>
+      <div style="text-align:left;"><label>Your Name</label><input type="text" id="sf-name" placeholder="Jordan"></div>
+      <div style="text-align:left;">
+        <label>Profile Picture (Optional)</label>
+        <div class="avatar-preview-circle" id="sf-pic-preview"><div class="placeholder-text">No photo yet</div></div>
+        <button type="button" class="file-btn" id="sf-pic-open-modal" style="display:block;margin:0 auto;">Choose Profile Picture</button>
+      </div>
+      ${stateCountyFields('sf')}
+      <div class="file-hint" style="text-align:left;">Your state is used to show contractors nearby jobs posted in your area.</div>
+      <div class="row2" style="text-align:left;">
+        <div><label>Email</label><input type="email" id="sf-email" placeholder="you@email.com" autocomplete="email"></div>
+        <div>
+          <label>Password</label><input type="password" id="sf-password" autocomplete="new-password">
+          <div class="pw-req" id="sf-pw-req-length">✗ At least 6 characters</div>
+          <div class="pw-req" id="sf-pw-req-symbol">✗ Contains a number or symbol</div>
+        </div>
+      </div>
+      <div style="text-align:left;">
+        <label>Phone Number</label>
+        <input type="tel" id="sf-phone" placeholder="(555) 555-5555" autocomplete="tel" inputmode="numeric">
+        <div class="file-hint">Kept private. You can share it yourself through messages if you'd like.</div>
+      </div>
+      <div id="sf-err" class="err" style="display:none;"></div>
+      <button type="submit" class="submit-btn">Create Account</button>
+    </form>`;
+  }
+  return html;
+}
+
+// ---------- Post job (homeowners only) ----------
+function renderPostForm(){
+  const editing = state.editingJobId != null;
+  return `<div id="post-forms">${jobForm(editing)}</div>`;
+}
+
+function jobForm(editing){
+  const u = state.user;
+  return `<form class="card wide centered" id="job-form" style="max-width:520px;margin:0 auto;">
+    <div style="text-align:left;"><label>Job Title</label><input type="text" id="jf-title" placeholder="Fix leaking kitchen faucet"></div>
+    <div style="text-align:left;">
+      <label>Location</label>
+      <input type="text" id="jf-location" value="${escapeHtml(locationLine(u))}" readonly>
+      <div class="file-hint">Matches the location on your account.</div>
+    </div>
+    <div style="text-align:left;"><label>Trade(s) Needed</label>${tradeCheckboxes('jf', false)}</div>
+    <div style="text-align:left;"><label>Describe the Job</label><textarea id="jf-desc" placeholder="What needs to be done, timeline, any details"></textarea></div>
+    <div style="text-align:left;">
+      <label>Budget (Optional)</label>
+      <input type="text" id="jf-budget" placeholder="e.g. 300 or 200-400" inputmode="decimal">
+      <div class="file-hint">Numbers only — a single amount or a range like 200-400.</div>
+    </div>
+    ${!editing ? `<div style="text-align:center;">
+      <label>Upload Photos (Optional)</label>
+      <div><input type="file" id="jf-photos" accept="image/*" multiple class="file-input-hidden">
+      <label for="jf-photos" class="file-btn">Add Photos</label></div>
+      <div class="file-hint">Up to 6 images, 5MB each.</div>
+    </div>` : `<div class="file-hint">Photos can be added after saving, from the job's card.</div>`}
+    <div id="jf-err" class="err" style="display:none;"></div>
+    <button type="submit" class="submit-btn">${editing ? 'Save Changes' : 'Post Job'}</button>
+    <div style="font-size:12px;color:var(--sub);text-align:center;">Posting as ${escapeHtml(u.name)}</div>
+  </form>`;
+}
+
+// ---------- Profile page (homeowners only) ----------
+async function renderProfile(){
+  const u = state.user;
+  let html = `<div class="card" style="max-width:520px;margin:0 auto;text-align:center;">
+    <div class="avatar-preview-circle" id="pf-pic-preview" style="width:96px;height:96px;">${u.profilePic ? `<img src="${escapeHtml(u.profilePic)}">` : '<div class="placeholder-text">No photo yet</div>'}</div>
+    <h3 style="margin:0;">${escapeHtml(u.name)}</h3><div class="meta">Homeowner Account &middot; ${escapeHtml(locationLine(u))}</div>
+    <button type="button" class="file-btn" id="pf-pic-open-modal" style="margin-top:12px;">${u.profilePic ? 'Change Profile Picture' : 'Choose Profile Picture'}</button>
+    <div id="pf-pic-err" class="err" style="display:none;margin-top:8px;"></div>
+  </div>`;
+
+  html += `<div class="card" style="max-width:520px;margin:0 auto;">
+    <label style="display:block;margin-bottom:6px;">Your Location</label>
+    ${stateCountyFields('pf', u.state, u.county, u.countyPublic)}
+    <div id="pf-location-err" class="err" style="display:none;"></div>
+    <button class="submit-btn" id="pf-location-save" style="width:auto;padding:10px 20px;margin-top:8px;">Save Location</button>
+  </div>`;
+
+  html += `<h3 style="margin:24px 0 12px;">Your Job Posts</h3>`;
+  try{
+    const { jobs } = await api('/api/jobs');
+    if(jobs.length === 0){
+      html += `<div class="empty">You haven't posted any jobs yet. Use "Post a Job" above to get started.</div>`;
+    } else {
+      jobs.forEach(j=>{ html += jobCardHtml(j); });
+    }
+  }catch(e){
+    html += `<div class="empty">We couldn't load your job posts: ${escapeHtml(e.message)}</div>`;
+  }
+
+  return html;
+}
+
+// ---------- Messages (inbox-style: search + pin) ----------
+async function renderThreads(){
+  let html = `<div class="filter-bar">
+    <input type="text" id="msg-search" placeholder="Search names or messages..." style="flex:1;" value="${escapeHtml(window.__msgSearch || '')}">
+  </div>`;
+  const q = window.__msgSearch || '';
+  const { threads } = await api('/api/messages/threads' + (q ? '?q=' + encodeURIComponent(q) : ''));
+  if(threads.length === 0){
+    html += `<div class="empty">${q ? 'No conversations match your search.' : 'No conversations yet. Message a job poster or contractor to start one.'}</div>`;
+    return html;
+  }
+  html += `<div class="card" style="padding:0;">${threads.map(t=>`
+    <div class="thread-list-item">
+      <div data-open-thread="${t.userId}" style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+        ${avatarHtml(t.profilePic, t.name, 36)}
+        <div style="flex:1;min-width:0;">
+          <div class="tname">${escapeHtml(t.name)} ${t.unread ? `<span class="badge">${t.unread} New</span>` : ''}</div>
+          <div class="tpreview">${escapeHtml(t.lastMessage)}</div>
+        </div>
+      </div>
+      <button class="pin-btn ${t.pinned?'pinned':''}" data-toggle-pin="${t.userId}" data-pinned="${t.pinned?'1':'0'}" title="${t.pinned?'Unpin':'Pin'}">${t.pinned ? '★' : '☆'}</button>
+    </div>`).join('')}</div>`;
+  return html;
+}
+
+async function renderThread(){
+  const { other, messages } = await api('/api/messages/thread/' + state.activeThreadUserId);
+  let html = `<button class="ghost-btn" id="back-to-threads" style="margin-bottom:12px;">&larr; All Messages</button>
+  <div class="card" style="padding-bottom:12px;"><h3 style="margin-top:0;">${escapeHtml(other.name)}</h3>
+  <div class="msg-thread" id="msg-thread-box">`;
+  if(messages.length === 0) html += `<div class="meta">Send a message to start the conversation.</div>`;
+  messages.forEach(m=>{
+    const mine = m.senderId === state.user.id;
+    html += `<div class="msg-bubble ${mine?'msg-mine':'msg-theirs'}">${escapeHtml(m.body)}</div>`;
+  });
+  html += `</div>
+  <div class="msg-send-row"><input type="text" id="msg-input" placeholder="Type a message..."><button class="submit-btn" id="msg-send">Send</button></div>
+  <div id="msg-err" class="err" style="display:none;"></div>
+  </div>`;
+  return html;
+}
+
+// ---------- Handlers ----------
+function attachHandlers(){
+  const jf = document.getElementById('job-filter');
+  if(jf){
+    jf.value = window.__jobFilter || '';
+    if(jf.dataset.gateSelect){ jf.addEventListener('mousedown', (e)=>{ e.preventDefault(); jf.blur(); setView('welcome-intro'); }); }
+    else jf.onchange = (e)=>{ window.__jobFilter = e.target.value; render(); };
+  }
+  const cf = document.getElementById('contractor-filter');
+  if(cf){
+    cf.value = window.__contractorFilter || '';
+    if(cf.dataset.gateSelect){ cf.addEventListener('mousedown', (e)=>{ e.preventDefault(); cf.blur(); setView('welcome-intro'); }); }
+    else cf.onchange = (e)=>{ window.__contractorFilter = e.target.value; render(); };
+  }
+  const nf = document.getElementById('network-filter');
+  if(nf){ nf.value = window.__networkFilter || ''; nf.onchange = (e)=>{ window.__networkFilter = e.target.value; render(); }; }
+
+  const contractorSearch = document.getElementById('contractor-search');
+  if(contractorSearch){
+    if(contractorSearch.dataset.gateInput){
+      contractorSearch.addEventListener('focus', ()=>{ contractorSearch.blur(); setView('welcome-intro'); });
+    } else {
+      let searchTimer;
+      contractorSearch.addEventListener('input', ()=>{
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(()=>{ window.__contractorSearch = contractorSearch.value; render(); }, 300);
+      });
+    }
+  }
+
+  ['job-near', 'contractor-near', 'network-near'].forEach(prefix=>{
+    const openBtn = document.getElementById(prefix + '-open-distance');
+    if(openBtn) openBtn.onclick = ()=> openDistanceModal(prefix);
+    const clearBtn = document.getElementById(prefix + '-clear-distance');
+    if(clearBtn) clearBtn.onclick = ()=>{
+      delete window['__' + prefix + 'FromState'];
+      delete window['__' + prefix + 'FromCounty'];
+      delete window['__' + prefix + 'Radius'];
+      render();
+    };
+  });
+
+  const msgSearch = document.getElementById('msg-search');
+  if(msgSearch){
+    let searchTimer;
+    msgSearch.addEventListener('input', ()=>{
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(()=>{ window.__msgSearch = msgSearch.value; render(); }, 300);
+    });
+  }
+  document.querySelectorAll('[data-toggle-pin]').forEach(btn=>{
+    btn.onclick = async (e)=>{
+      e.stopPropagation();
+      const userId = btn.getAttribute('data-toggle-pin');
+      const pinned = btn.getAttribute('data-pinned') === '1';
+      try{
+        if(pinned) await api('/api/messages/pin/' + userId, { method:'DELETE' });
+        else await api('/api/messages/pin/' + userId, { method:'POST' });
+        render();
+      }catch(err){ showToast(err.message, 'error'); }
+    };
+  });
+
+  const welcomeLogin = document.getElementById('welcome-login');
+  if(welcomeLogin) welcomeLogin.onclick = ()=>{
+    if(state.view === 'welcome'){ setView('welcome-intro'); }
+    else { state.authMode = 'login'; setView('account'); }
+  };
+  const welcomeSignup = document.getElementById('welcome-signup');
+  if(welcomeSignup) welcomeSignup.onclick = ()=>{
+    if(state.view === 'welcome'){ setView('welcome-intro'); }
+    else { state.authMode = 'signup'; setView('account'); }
+  };
+
+  document.querySelectorAll('[data-reveal-email]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const email = btn.getAttribute('data-reveal-email');
+      const phone = btn.getAttribute('data-reveal-phone');
+      const div = document.createElement('div');
+      div.className = 'contact-reveal';
+      div.innerHTML = `Email: ${escapeHtml(email)}` + (phone ? `<br>Phone: ${escapeHtml(phone)}` : '');
+      btn.replaceWith(div);
+    };
+  });
+  document.querySelectorAll('[data-gate]').forEach(btn=>{ btn.onclick = ()=> setView('welcome-intro'); });
+  const gateSignup = document.getElementById('gate-signup');
+  if(gateSignup) gateSignup.onclick = ()=> setView('welcome-intro');
+
+  document.querySelectorAll('[data-message-user]').forEach(btn=>{
+    btn.onclick = ()=>{ state.activeThreadUserId = btn.getAttribute('data-message-user'); setView('thread'); };
+  });
+  document.querySelectorAll('[data-open-thread]').forEach(el=>{
+    el.onclick = ()=>{ state.activeThreadUserId = el.getAttribute('data-open-thread'); setView('thread'); };
+  });
+  document.querySelectorAll('[data-view-business]').forEach(btn=>{
+    btn.onclick = ()=>{ state.businessId = Number(btn.getAttribute('data-view-business')); setView('business'); };
+  });
+  const backBtn = document.getElementById('back-to-threads');
+  if(backBtn) backBtn.onclick = ()=> setView('messages');
+
+  const netTabMembers = document.getElementById('net-tab-members');
+  const netTabThreads = document.getElementById('net-tab-threads');
+  if(netTabMembers) netTabMembers.onclick = ()=>{ state.networkTab = 'members'; render(); };
+  if(netTabThreads) netTabThreads.onclick = ()=>{ state.networkTab = 'threads'; state.activeNetworkPostId = null; render(); };
+
+  document.querySelectorAll('[data-open-thread-post]').forEach(el=>{
+    el.onclick = ()=>{ state.activeNetworkPostId = el.getAttribute('data-open-thread-post'); render(); };
+  });
+  const backToThreadsList = document.getElementById('back-to-network-threads');
+  if(backToThreadsList) backToThreadsList.onclick = ()=>{ state.activeNetworkPostId = null; render(); };
+
+  const npSubmit = document.getElementById('np-submit');
+  if(npSubmit){
+    npSubmit.onclick = async ()=>{
+      const title = document.getElementById('np-title').value.trim();
+      const body = document.getElementById('np-body').value.trim();
+      const photosInput = document.getElementById('np-photos');
+      const errEl = document.getElementById('np-err');
+      if(!title || !body){ errEl.textContent = 'Please fill in both a title and details.'; errEl.style.display = 'block'; return; }
+      try{
+        if(photosInput && photosInput.files.length){
+          const fd = new FormData();
+          fd.append('title', title); fd.append('body', body);
+          Array.from(photosInput.files).slice(0,3).forEach(f => fd.append('photos', f));
+          await api('/api/network/posts', { method:'POST', body: fd });
+        } else {
+          await api('/api/network/posts', { method:'POST', body: JSON.stringify({ title, body }) });
+        }
+        showToast('Thread posted.');
+        render();
+      }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+    };
+  }
+  const nrSubmit = document.getElementById('nr-submit');
+  if(nrSubmit){
+    nrSubmit.onclick = async ()=>{
+      const body = document.getElementById('nr-body').value.trim();
+      const errEl = document.getElementById('nr-err');
+      if(!body){ errEl.textContent = 'Reply cannot be empty.'; errEl.style.display = 'block'; return; }
+      try{
+        await api('/api/network/posts/' + state.activeNetworkPostId + '/replies', { method:'POST', body: JSON.stringify({ body }) });
+        showToast('Reply posted.');
+        render();
+      }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+    };
+  }
+
+  document.querySelectorAll('[data-review-contractor]').forEach(btn=>{
+    btn.onclick = ()=>{
+      const id = btn.getAttribute('data-review-contractor');
+      const box = document.getElementById('reviews-' + id);
+      if(box.dataset.formOpen === '1'){ renderReviewsInline(id); box.dataset.formOpen = '0'; return; }
+      box.dataset.formOpen = '1';
+      box.insertAdjacentHTML('beforebegin', `<form class="card" id="review-form-${id}" style="margin-top:10px;max-width:none;">
+        <label>Your Rating</label>
+        <select id="rf-rating-${id}"><option value="5">5 - Excellent</option><option value="4">4 - Good</option><option value="3">3 - Okay</option><option value="2">2 - Poor</option><option value="1">1 - Bad</option></select>
+        <label>Comment (Optional)</label>
+        <textarea id="rf-comment-${id}" placeholder="How did it go?"></textarea>
+        <div id="rf-err-${id}" class="err" style="display:none;"></div>
+        <button type="submit" class="submit-btn">Submit Review</button>
+      </form>`);
+      document.getElementById(`review-form-${id}`).onsubmit = async (e)=>{
+        e.preventDefault();
+        const rating = Number(document.getElementById(`rf-rating-${id}`).value);
+        const comment = document.getElementById(`rf-comment-${id}`).value.trim();
+        const errEl = document.getElementById(`rf-err-${id}`);
+        try{
+          await api(`/api/contractors/${id}/reviews`, { method:'POST', body: JSON.stringify({ rating, comment }) });
+          document.getElementById(`review-form-${id}`).remove();
+          box.dataset.formOpen = '0';
+          renderReviewsInline(id);
+          showToast('Review submitted — thank you for sharing your experience.');
+        }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+      };
+    };
+  });
+  document.querySelectorAll('[id^="reviews-"]').forEach(box=>{
+    const id = box.id.replace('reviews-','');
+    renderReviewsInline(id);
+  });
+
+  document.querySelectorAll('[data-edit-job]').forEach(btn=>{
+    btn.onclick = ()=>{ state.editingJobId = btn.getAttribute('data-edit-job'); loadJobIntoEditForm(state.editingJobId); };
+  });
+  document.querySelectorAll('[data-delete-job]').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const ok = await showConfirm('Delete this job post? This cannot be undone.');
+      if(!ok) return;
+      try{ await api('/api/jobs/' + btn.getAttribute('data-delete-job'), { method:'DELETE' }); showToast('Your job post has been deleted.'); render(); }
+      catch(err){ showToast(err.message, 'error'); }
+    };
+  });
+  document.querySelectorAll('[data-complete-job]').forEach(btn=>{
+    btn.onclick = async ()=>{
+      try{
+        const result = await api('/api/jobs/' + btn.getAttribute('data-complete-job') + '/complete', { method:'POST' });
+        if(result.deleted) showToast('Both sides have confirmed — this job is now complete and has been removed from the board.');
+        else showToast('Marked as complete on your end.');
+        render();
+      }catch(err){ showToast(err.message, 'error'); }
+    };
+  });
+
+  const msgSend = document.getElementById('msg-send');
+  if(msgSend){
+    const send = async ()=>{
+      const input = document.getElementById('msg-input');
+      const body = input.value.trim();
+      const errEl = document.getElementById('msg-err');
+      if(!body) return;
+      try{
+        await api('/api/messages', { method:'POST', body: JSON.stringify({ recipientId: state.activeThreadUserId, body }) });
+        input.value = '';
+        errEl.style.display = 'none';
+        render();
+      }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+    };
+    msgSend.onclick = send;
+    document.getElementById('msg-input').addEventListener('keydown', (e)=>{ if(e.key==='Enter') send(); });
+  }
+
+  const typeHomeowner = document.getElementById('type-homeowner');
+  const typeContractor = document.getElementById('type-contractor');
+  if(typeHomeowner) typeHomeowner.onclick = ()=>{ state.signupType='homeowner'; render(); };
+  if(typeContractor) typeContractor.onclick = ()=>{ state.signupType='contractor'; render(); };
+
+  const authTabLogin = document.getElementById('auth-tab-login');
+  const authTabSignup = document.getElementById('auth-tab-signup');
+  if(authTabLogin) authTabLogin.onclick = ()=>{ state.authMode='login'; render(); };
+  if(authTabSignup) authTabSignup.onclick = ()=>{ state.authMode='signup'; render(); };
+
+  const sfPassword = document.getElementById('sf-password');
+  if(sfPassword){
+    const lengthReq = document.getElementById('sf-pw-req-length');
+    const symbolReq = document.getElementById('sf-pw-req-symbol');
+    sfPassword.addEventListener('input', ()=>{
+      const val = sfPassword.value;
+      const lengthOk = val.length >= 6;
+      const symbolOk = /[0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(val);
+      lengthReq.textContent = (lengthOk ? '✓' : '✗') + ' At least 6 characters';
+      lengthReq.classList.toggle('met', lengthOk);
+      symbolReq.textContent = (symbolOk ? '✓' : '✗') + ' Contains a number or symbol';
+      symbolReq.classList.toggle('met', symbolOk);
+    });
+  }
+  const sfPhone = document.getElementById('sf-phone');
+  if(sfPhone) sfPhone.addEventListener('input', ()=>{ sfPhone.value = formatPhoneInput(sfPhone.value); });
+  const jfBudget = document.getElementById('jf-budget');
+  if(jfBudget) jfBudget.addEventListener('input', ()=>{ jfBudget.value = formatBudgetInput(jfBudget.value); });
+
+
+  const sfTradeOther = document.getElementById('sf-trade-other');
+  if(sfTradeOther){
+    sfTradeOther.onchange = ()=>{
+      const box = document.getElementById('sf-other-trades');
+      box.style.display = sfTradeOther.checked ? 'flex' : 'none';
+      box.style.flexDirection = 'column';
+      if(sfTradeOther.checked) setupDynamicTextList(box, 'sf-other-trade', 'Type of work');
+      else box.innerHTML = '';
+    };
+  }
+
+  const sfPicOpenModal = document.getElementById('sf-pic-open-modal');
+  if(sfPicOpenModal){
+    sfPicOpenModal.onclick = ()=>{
+      openProfilePicModal((blob)=>{
+        state.pendingAvatarBlob = blob;
+        const preview = document.getElementById('sf-pic-preview');
+        preview.innerHTML = `<img src="${URL.createObjectURL(blob)}">`;
+        sfPicOpenModal.textContent = 'Change Profile Picture';
+      });
+    };
+  }
+  const pfPicOpenModal = document.getElementById('pf-pic-open-modal');
+  if(pfPicOpenModal){
+    pfPicOpenModal.onclick = ()=>{
+      openProfilePicModal(async (blob)=>{
+        const errEl = document.getElementById('pf-pic-err');
+        const fd = new FormData(); fd.append('photo', blob, 'profile.jpg');
+        try{
+          const r = await api('/api/auth/me/profile-pic', { method:'POST', body: fd });
+          state.user.profilePic = r.profilePic;
+          showToast('Profile picture updated.');
+          render();
+        }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+      });
+    };
+  }
+
+  const pfLocationSave = document.getElementById('pf-location-save');
+  if(pfLocationSave){
+    pfLocationSave.onclick = async ()=>{
+      const stateCode = document.getElementById('pf-state').value;
+      const county = document.getElementById('pf-county').value.trim();
+      const countyPublic = document.getElementById('pf-county-public').checked;
+      const errEl = document.getElementById('pf-location-err');
+      if(!stateCode){ errEl.textContent = 'Please select your state.'; errEl.style.display='block'; return; }
+      try{
+        await api('/api/auth/me/location', { method:'PATCH', body: JSON.stringify({ state: stateCode, county, countyPublic }) });
+        state.user.state = stateCode; state.user.county = county; state.user.countyPublic = countyPublic;
+        errEl.style.display = 'none';
+        showToast('Location updated.');
+        render();
+      }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+    };
+  }
+
+  const sfLogoOpenModal = document.getElementById('sf-logo-open-modal');
+  if(sfLogoOpenModal){
+    sfLogoOpenModal.onclick = ()=>{
+      openLogoCropModal((blob)=>{
+        state.pendingLogoBlob = blob;
+        const preview = document.getElementById('sf-logo-preview');
+        preview.innerHTML = `<img src="${URL.createObjectURL(blob)}" style="width:100%;height:100%;object-fit:cover;">`;
+        sfLogoOpenModal.textContent = 'Change Logo';
+      });
+    };
+  }
+
+  const loginForm = document.getElementById('login-form');
+  if(loginForm){
+    loginForm.onsubmit = async (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('lf-email').value.trim();
+      const password = document.getElementById('lf-password').value;
+      const errEl = document.getElementById('lf-err');
+      const btn = loginForm.querySelector('button[type=submit]');
+      btn.disabled = true;
+      try{
+        const { token, user } = await api('/api/auth/login', { method:'POST', body: JSON.stringify({ email, password }) });
+        state.token = token; state.user = user; localStorageSet('hc_token', token);
+        errEl.style.display = 'none';
+        setView(user.type === 'homeowner' ? 'profile' : 'jobs');
+      }catch(err){ errEl.textContent = err.message; errEl.style.display = 'block'; btn.disabled = false; }
+    };
+  }
+  const lfForgot = document.getElementById('lf-forgot');
+  if(lfForgot) lfForgot.onclick = ()=>{ state.authMode = 'forgot'; render(); };
+
+  const forgotForm = document.getElementById('forgot-form');
+  if(forgotForm){
+    forgotForm.onsubmit = async (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('ff-email').value.trim();
+      const errEl = document.getElementById('ff-err');
+      const okEl = document.getElementById('ff-ok');
+      const btn = forgotForm.querySelector('button[type=submit]');
+      btn.disabled = true;
+      try{
+        const { message } = await api('/api/auth/forgot-password', { method:'POST', body: JSON.stringify({ email }) });
+        errEl.style.display = 'none';
+        okEl.textContent = message;
+        okEl.style.display = 'block';
+      }catch(err){ errEl.textContent = err.message; errEl.style.display = 'block'; }
+      btn.disabled = false;
+    };
+  }
+  const ffBack = document.getElementById('ff-back');
+  if(ffBack) ffBack.onclick = ()=>{ state.authMode = 'login'; render(); };
+
+  const resetForm = document.getElementById('reset-form');
+  if(resetForm){
+    resetForm.onsubmit = async (e)=>{
+      e.preventDefault();
+      const password = document.getElementById('rf-password').value;
+      const errEl = document.getElementById('rf-err');
+      const btn = resetForm.querySelector('button[type=submit]');
+      btn.disabled = true;
+      try{
+        await api('/api/auth/reset-password', { method:'POST', body: JSON.stringify({ token: state.resetToken, password }) });
+        state.resetToken = null;
+        state.authMode = 'login';
+        showToast('Password updated. You can log in now.');
+        render();
+      }catch(err){ errEl.textContent = err.message; errEl.style.display = 'block'; btn.disabled = false; }
+    };
+  }
+
+  const signupForm = document.getElementById('signup-form');
+  if(signupForm){
+    signupForm.onsubmit = async (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('sf-name').value.trim();
+      const password = document.getElementById('sf-password').value;
+      const email = document.getElementById('sf-email').value.trim();
+      const phone = document.getElementById('sf-phone').value.trim();
+      const stateCode = document.getElementById('sf-state').value;
+      const county = document.getElementById('sf-county').value.trim();
+      const countyPublic = document.getElementById('sf-county-public').checked;
+      const errEl = document.getElementById('sf-err');
+      const btn = signupForm.querySelector('button[type=submit]');
+
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!emailRe.test(email)){
+        errEl.textContent = 'Please enter a valid email address.';
+        errEl.style.display = 'block';
+        return;
+      }
+      const passwordRe = /^(?=.*[0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{6,}$/;
+      if(!passwordRe.test(password)){
+        errEl.textContent = 'Password must be at least 6 characters and include a number or special character.';
+        errEl.style.display = 'block';
+        return;
+      }
+      const phoneDigits = phone.replace(/\D/g, '');
+      if(phoneDigits.length !== 10){
+        errEl.textContent = 'Please enter a valid 10-digit phone number.';
+        errEl.style.display = 'block';
+        return;
+      }
+      if(!stateCode){
+        errEl.textContent = 'Please select your state.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      const fd = new FormData();
+      fd.append('name', name);
+      fd.append('password', password);
+      fd.append('email', email);
+      fd.append('phone', phone);
+      fd.append('state', stateCode);
+      fd.append('county', county);
+      fd.append('countyPublic', countyPublic ? 'true' : 'false');
+      fd.append('type', state.signupType);
+
+      let workPhotosFiles = null;
+
+      if(state.signupType === 'contractor'){
+        const trades = Array.from(document.querySelectorAll('.sf-trade:checked')).map(i=>i.value);
+        const otherBox = document.getElementById('sf-other-trades');
+        if(otherBox) trades.push(...collectDynamicValues(otherBox));
+        const phonePublic = document.getElementById('sf-phone-public').checked;
+        if(trades.length === 0){
+          errEl.textContent = 'Select at least one type of contractor work you do.';
+          errEl.style.display = 'block';
+          return;
+        }
+        if(!state.pendingLogoBlob){
+          errEl.textContent = 'A business logo is required to create a contractor account.';
+          errEl.style.display = 'block';
+          return;
+        }
+        fd.append('trades', JSON.stringify(trades));
+        fd.append('area', '');
+        fd.append('bio', document.getElementById('sf-bio').value.trim());
+        fd.append('phonePublic', phonePublic ? 'true' : 'false');
+        fd.append('avatar', state.pendingLogoBlob, 'logo.jpg');
+        const workPhotosInput = document.getElementById('sf-work-photos');
+        if(workPhotosInput && workPhotosInput.files.length) workPhotosFiles = workPhotosInput.files;
+      } else if(state.pendingAvatarBlob){
+        fd.append('avatar', state.pendingAvatarBlob, 'profile.jpg');
+      }
+
+      btn.disabled = true;
+      try{
+        const { token, user } = await api('/api/auth/signup', { method:'POST', body: fd });
+        state.token = token; state.user = user; localStorageSet('hc_token', token);
+        state.pendingAvatarBlob = null;
+        state.pendingLogoBlob = null;
+
+        if(workPhotosFiles){
+          const pfd = new FormData();
+          Array.from(workPhotosFiles).forEach(f => pfd.append('photos', f));
+          try{ await api('/api/contractors/me/photos', { method:'POST', body: pfd }); }catch(e){}
+        }
+
+        errEl.style.display = 'none';
+        if(state.signupType === 'contractor'){ state.businessId = state.user.id; setView('business'); }
+        else{ setView('profile'); }
+      }catch(err){ errEl.textContent = err.message; errEl.style.display = 'block'; btn.disabled = false; }
+    };
+  }
+
+  const jf2 = document.getElementById('job-form');
+  if(jf2){
+    jf2.onsubmit = async (e)=>{
+      e.preventDefault();
+      const title = document.getElementById('jf-title').value.trim();
+      const trades = Array.from(document.querySelectorAll('.jf-trade:checked')).map(i=>i.value);
+      const description = document.getElementById('jf-desc').value.trim();
+      const budget = document.getElementById('jf-budget').value.trim();
+      const errEl = document.getElementById('jf-err');
+      const btn = jf2.querySelector('button[type=submit]');
+      if(trades.length === 0){
+        errEl.textContent = 'Select at least one trade needed.';
+        errEl.style.display = 'block';
+        return;
+      }
+      btn.disabled = true;
+      try{
+        if(state.editingJobId){
+          await api('/api/jobs/' + state.editingJobId, { method:'PATCH', body: JSON.stringify({ title, trades, description, budget }) });
+          state.editingJobId = null;
+          errEl.style.display = 'none';
+          showToast('Your changes have been saved.');
+          setView('profile');
+        } else {
+          const { job } = await api('/api/jobs', { method:'POST', body: JSON.stringify({ title, trades, description, budget }) });
+          const photosInput = document.getElementById('jf-photos');
+          if(photosInput && photosInput.files.length){
+            const fd = new FormData();
+            Array.from(photosInput.files).forEach(f => fd.append('photos', f));
+            try{ await api('/api/jobs/' + job.id + '/photos', { method:'POST', body: fd }); }catch(e){}
+          }
+          errEl.style.display = 'none';
+          showToast('Your job has been posted and is now visible to contractors.');
+          setView('profile');
+        }
+      }catch(err){ errEl.textContent = err.message; errEl.style.display = 'block'; btn.disabled = false; }
+    };
+  }
+
+  const bizLocationSave = document.getElementById('biz-location-save');
+  if(bizLocationSave){
+    bizLocationSave.onclick = async ()=>{
+      const stateCode = document.getElementById('biz-state').value;
+      const county = document.getElementById('biz-county').value.trim();
+      const countyPublic = document.getElementById('biz-county-public').checked;
+      const errEl = document.getElementById('biz-location-err');
+      if(!stateCode){ errEl.textContent = 'Please select your state.'; errEl.style.display='block'; return; }
+      try{
+        await api('/api/auth/me/location', { method:'PATCH', body: JSON.stringify({ state: stateCode, county, countyPublic }) });
+        errEl.style.display = 'none';
+        showToast('Location updated.');
+        render();
+      }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+    };
+  }
+  const bizBioSave = document.getElementById('biz-bio-save');
+  if(bizBioSave){
+    bizBioSave.onclick = async ()=>{
+      const bio = document.getElementById('biz-bio').value.trim();
+      const errEl = document.getElementById('biz-bio-err');
+      const current = state.currentBusiness || {};
+      try{
+        await api('/api/contractors/me', { method:'PATCH', body: JSON.stringify({ bio, area: current.area || '', years: current.years || '' }) });
+        errEl.style.display = 'none';
+        showToast('Bio saved.');
+        render();
+      }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+    };
+  }
+  const bizLogoOpenModal = document.getElementById('biz-logo-open-modal');
+  if(bizLogoOpenModal){
+    bizLogoOpenModal.onclick = ()=>{
+      openLogoCropModal(async (blob)=>{
+        const errEl = document.getElementById('biz-logo-err');
+        const fd = new FormData(); fd.append('logo', blob, 'logo.jpg');
+        try{
+          const r = await api('/api/auth/me/logo', { method:'POST', body: fd });
+          state.user.logo = r.logo; state.user.profilePic = r.logo;
+          errEl.style.display = 'none';
+          showToast('Logo updated.');
+          render();
+        }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+      });
+    };
+  }
+  const bizPhotos = document.getElementById('biz-photos');
+  if(bizPhotos){
+    bizPhotos.onchange = async ()=>{
+      const files = bizPhotos.files; if(!files.length) return;
+      const errEl = document.getElementById('biz-photos-err');
+      const fd = new FormData();
+      Array.from(files).forEach(f => fd.append('photos', f));
+      try{
+        await api('/api/contractors/me/photos', { method:'POST', body: fd });
+        errEl.style.display = 'none';
+        showToast('Photos added to your work highlights.');
+        render();
+      }catch(err){ errEl.textContent = err.message; errEl.style.display='block'; }
+    };
+  }
+}
+
+async function loadJobIntoEditForm(jobId){
+  try{
+    const { jobs } = await api('/api/jobs');
+    const job = jobs.find(j => String(j.id) === String(jobId));
+    if(!job) return;
+    setView('post');
+    setTimeout(()=>{
+      document.getElementById('jf-title').value = job.title;
+      document.getElementById('jf-desc').value = job.description;
+      document.getElementById('jf-budget').value = job.budget;
+      (job.trades || []).forEach(t=>{
+        const box = document.querySelector(`.jf-trade[value="${CSS.escape(t)}"]`);
+        if(box) box.checked = true;
+      });
+    }, 0);
+  }catch(e){}
+}
+
+(async function init(){
+  await restoreSession();
+  if(state.user){ state.view = state.user.type === 'homeowner' ? 'profile' : 'jobs'; }
+
+  const params = new URLSearchParams(window.location.search);
+
+  const resetToken = params.get('resetToken');
+  if(resetToken){
+    history.replaceState(null, '', window.location.pathname);
+    state.resetToken = resetToken;
+    state.authMode = 'reset';
+    state.view = 'account';
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>

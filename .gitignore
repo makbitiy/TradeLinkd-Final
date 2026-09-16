@@ -1,0 +1,12 @@
+node_modules/
+.env
+*.log
+npm-debug.log*
+
+# SQLite database files (created at runtime; see DATA_DIR in README)
+*.db
+*.db-shm
+*.db-wal
+
+# Uploaded user content (created at runtime)
+uploads/
